@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'screens/home_screen.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(FarmaciaGestaoApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
+class FarmaciaGestaoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      title: 'Sistema de Gestão de Farmácia',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: HomeScreen(),
+      routes: {
+        '/clientes': (context) => ListaClientesScreen(),
+        '/produtos': (context) => ListaProdutosScreen(),
+        '/inventarios': (context) => ListaInventariosScreen(),
+        '/vendas': (context) => ListaVendasScreen(),
+        '/relatorios': (context) => ListaRelatoriosScreen(),
+      },
     );
   }
 }
