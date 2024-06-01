@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
+import 'screens/clientes/lista_clientes.dart';
+import 'screens/produtos/lista_produtos.dart';
+import 'screens/relatorios/lista_relatorios.dart';
+import 'screens/vendas/lista_vendas.dart';
+import 'screens/relatorios/lista_relatorios.dart';
 
 void main() {
   runApp(FarmaciaGestaoApp());
