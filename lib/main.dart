@@ -34,7 +34,7 @@ class FarmaciaGestaoApp extends StatelessWidget {
         '/clientes/remover': (context) => RemoverClienteScreen(),
         '/produtos': (context) => ListaProdutosScreen(),
         '/produtos/adicionar': (context) => AdicionarProdutoScreen(),
-        '/inventarios': (context) => ListaInventariosScreen(),
+        '/inventarios': (context) => ListaStockScreen(),
         '/inventarios/atualizar': (context) => AtualizarInventarioScreen(),
         '/vendas': (context) => ListaVendasScreen(),
         '/vendas/nova': (context) => NovaVendaScreen(),
