@@ -32,7 +32,7 @@ class SubmenuClientesScreen extends StatelessWidget {
               leading: Icon(Icons.update),
               title: Text('Ver Conta Corrente do Cliente'),
               onTap: () {
-                //Navigator.pushNamed(context, '/clientes/atualizar');
+                Navigator.pushNamed(context, '/clientes/conta-corrente');
               },
             ),
           ),

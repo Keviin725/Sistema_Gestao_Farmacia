@@ -6,6 +6,7 @@ import 'screens/clientes/adicionar_cliente.dart';
 import 'screens/clientes/submenu_clientes.dart';
 import 'screens/clientes/atualizar_cliente.dart';
 import 'screens/clientes/remover_cliente.dart';
+import 'screens/clientes/conta_corrente.dart';
 import 'screens/produtos/lista_produtos.dart';
 import 'screens/produtos/submenu_produtos.dart';
 import 'screens/produtos/adicionar_produto.dart';
@@ -23,6 +24,7 @@ void main() {
 }
 
 class FarmaciaGestaoApp extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -48,6 +50,9 @@ class FarmaciaGestaoApp extends StatelessWidget {
         '/vendas': (context) => SubmenuVendasScreen(),
         '/vendas/nova': (context) => NovaVendaScreen(),
         '/relatorios': (context) => SubmenuRelatoriosScreen(),
+        '/clientes/conta-corrente': (context) {
+          final Cliente cliente = ModalRoute.of(context)!.settings.arguments as Cliente;
+          return VerContaCorrenteScreen(cliente:cliente);}
       },
     );
   }
