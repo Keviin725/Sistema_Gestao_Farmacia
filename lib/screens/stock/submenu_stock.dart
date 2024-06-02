@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SubmenuProdutosScreen extends StatelessWidget {
+class SubmenuStockScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gestão de Produtos'),
+        title: Text('Gestão de Stock'),
       ),
       body: ListView(
         children: [
           Card(
             child: ListTile(
-              leading: Icon(Icons.add),
-              title: Text('1.1 Adicionar Produto'),
+              leading: Icon(Icons.update),
+              title: Text('1.1 Atualizar Stock'),
               onTap: () {
-                Navigator.pushNamed(context, '/produtos/adicionar');
+                Navigator.pushNamed(context, '/inventarios/atualizar');
               },
             ),
           ),
@@ -23,19 +23,19 @@ class SubmenuProdutosScreen extends StatelessWidget {
           
           Card(
             child: ListTile(
-              leading: Icon(Icons.update),
-              title: Text('1.2 Atualizar Produto'),
+              leading: Icon(Icons.add),
+              title: Text('1.2 Adicionar Stock'),
               onTap: () {
-                Navigator.pushNamed(context, '/produtos/atualizar');
+                Navigator.pushNamed(context, '/inventarios/adicionar');
               },
             ),
           ),
           Card(
             child: ListTile(
               leading: Icon(Icons.delete),
-              title: Text('1.3 Remover Produto'),
+              title: Text('1.3 Remover Stock'),
               onTap: () {
-                Navigator.pushNamed(context, '/produtos/remover');
+                Navigator.pushNamed(context, '/inventarios/remover');
               },
             ),
           ),

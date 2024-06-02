@@ -9,25 +9,41 @@ class SubmenuClientesScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          ListTile(
-            title: Text('1.1 Criar Cliente'),
-            onTap: () {
-              Navigator.pushNamed(context, '/clientes/adicionar');
-            },
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.add),
+              title: Text('Criar Cliente'),
+              onTap: () {
+                Navigator.pushNamed(context, '/clientes/adicionar');
+              },
+            ),
           ),
-          ListTile(
-            title: Text('1.2 Atualizar Cliente'),
-            onTap: () {
-              // Navegar para a tela de atualização de clientes (a ser criada)
-              Navigator.pushNamed(context, '/clientes/atualizar');
-            },
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.update),
+              title: Text('Atualizar Cliente'),
+              onTap: () {
+                Navigator.pushNamed(context, '/clientes/atualizar');
+              },
+            ),
           ),
-          ListTile(
-            title: Text('1.3 Remover Cliente'),
-            onTap: () {
-              // Navegar para a tela de remoção de clientes (a ser criada)
-              Navigator.pushNamed(context, '/clientes/remover');
-            },
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.update),
+              title: Text('Ver Conta Corrente do Cliente'),
+              onTap: () {
+                //Navigator.pushNamed(context, '/clientes/atualizar');
+              },
+            ),
+          ),
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.delete),
+              title: Text('Remover Cliente'),
+              onTap: () {
+                Navigator.pushNamed(context, '/clientes/remover');
+              },
+            ),
           ),
         ],
       ),

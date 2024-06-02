@@ -6,12 +6,16 @@ import 'screens/clientes/submenu_clientes.dart';
 import 'screens/clientes/atualizar_cliente.dart';
 import 'screens/clientes/remover_cliente.dart';
 import 'screens/produtos/lista_produtos.dart';
+import 'screens/produtos/submenu_produtos.dart';
 import 'screens/produtos/adicionar_produto.dart';
 import 'screens/stock/lista_stock.dart';
+import 'screens/stock/submenu_stock.dart';
 import 'screens/stock/atualizar_stock.dart';
 import 'screens/vendas/lista_vendas.dart';
+import 'screens/vendas/submenu_vendas.dart';
 import 'screens/vendas/nova_venda.dart';
 import 'screens/relatorios/lista_relatorios.dart';
+import 'screens/relatorios/submenu_relatorios.dart';
 
 void main() {
   runApp(FarmaciaGestaoApp());
@@ -32,13 +36,13 @@ class FarmaciaGestaoApp extends StatelessWidget {
         '/clientes/adicionar': (context) => AdicionarClienteScreen(),
         '/clientes/atualizar': (context) => AtualizarClienteScreen(),
         '/clientes/remover': (context) => RemoverClienteScreen(),
-        '/produtos': (context) => ListaProdutosScreen(),
+        '/produtos': (context) => SubmenuProdutosScreen(),
         '/produtos/adicionar': (context) => AdicionarProdutoScreen(),
-        '/inventarios': (context) => ListaStockScreen(),
+        '/inventarios': (context) => SubmenuStockScreen(),
         '/inventarios/atualizar': (context) => AtualizarInventarioScreen(),
-        '/vendas': (context) => ListaVendasScreen(),
+        '/vendas': (context) => SubmenuVendasScreen(),
         '/vendas/nova': (context) => NovaVendaScreen(),
-        '/relatorios': (context) => ListaRelatoriosScreen(),
+        '/relatorios': (context) => SubmenuRelatoriosScreen(),
       },
     );
   }
