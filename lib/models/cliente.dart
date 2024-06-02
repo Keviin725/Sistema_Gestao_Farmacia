@@ -22,4 +22,14 @@ class Cliente {
       'email': email,
     };
   }
+
+  static Cliente fromMap(Map<String, dynamic> map) {
+    return Cliente(
+      id: map['id'],
+      nome: map['nome'],
+      endereco: map['endereco'],
+      telefone: map['telefone'],
+      email: map['email'],
+    );
+  }
 }

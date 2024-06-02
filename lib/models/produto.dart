@@ -3,7 +3,7 @@ class Produto {
   final String nome;
   final String descricao;
   final double preco;
-  int estoque; // Remover a keyword final para que o valor possa ser atualizado
+  int estoque;
 
   Produto({
     required this.id,
@@ -28,5 +28,15 @@ class Produto {
       'preco': preco,
       'estoque': estoque,
     };
+  }
+
+  static Produto fromMap(Map<String, dynamic> map) {
+    return Produto(
+      id: map['id'],
+      nome: map['nome'],
+      descricao: map['descricao'],
+      preco: map['preco'],
+      estoque: map['estoque'],
+    );
   }
 }

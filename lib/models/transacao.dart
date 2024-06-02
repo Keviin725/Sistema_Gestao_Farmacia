@@ -2,34 +2,34 @@ class Transacao {
   final String id;
   final String clienteId;
   final String descricao;
-  final double valor;
   final DateTime data;
+  final double valor;
 
   Transacao({
     required this.id,
     required this.clienteId,
     required this.descricao,
-    required this.valor,
     required this.data,
+    required this.valor,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'cliente_id': clienteId,
+      'clienteId': clienteId,
       'descricao': descricao,
-      'valor': valor,
       'data': data.toIso8601String(),
+      'valor': valor,
     };
   }
 
-  factory Transacao.fromMap(Map<String, dynamic> map) {
+  static Transacao fromMap(Map<String, dynamic> map) {
     return Transacao(
       id: map['id'],
-      clienteId: map['cliente_id'],
+      clienteId: map['clienteId'],
       descricao: map['descricao'],
-      valor: map['valor'],
       data: DateTime.parse(map['data']),
+      valor: map['valor'],
     );
   }
 }

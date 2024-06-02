@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sistema_gestao_farmacia/models/cliente.dart';
-import 'package:sistema_gestao_farmacia/models/transacao.dart';
+import 'package:sistema_gestao_farmacia/models/transacao.dart'; // Importe Transacao
 import 'package:sistema_gestao_farmacia/services/transacao_service.dart';
 
 class VerContaCorrenteScreen extends StatefulWidget {
@@ -21,14 +21,14 @@ class _VerContaCorrenteScreenState extends State<VerContaCorrenteScreen> {
       appBar: AppBar(
         title: Text('Conta Corrente de ${widget.cliente.nome}'),
       ),
-      body: FutureBuilder(
-        future: transacaoService.getTransacoesDoCliente(widget.cliente),
+      body: FutureBuilder<List<Transacao>>(
+        future: transacaoService.getTransacoesPorCliente(widget.cliente.id), // Usando o método correto
         builder: (BuildContext context, AsyncSnapshot<List<Transacao>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Erro ao carregar as transações'));
-          } else if (snapshot.hasData) {
+          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             final transacoes = snapshot.data!;
             return _buildListaTransacoes(transacoes);
           } else {

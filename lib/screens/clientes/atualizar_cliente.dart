@@ -4,8 +4,9 @@ import 'package:sistema_gestao_farmacia/services/cliente_service.dart';
 
 class AtualizarClienteScreen extends StatefulWidget {
   final Cliente cliente;
+    final int clienteId;
 
-  const AtualizarClienteScreen({Key? key, required this.cliente}) : super(key: key);
+  AtualizarClienteScreen({required this.cliente, required this.clienteId});
 
   @override
   _AtualizarClienteScreenState createState() => _AtualizarClienteScreenState();

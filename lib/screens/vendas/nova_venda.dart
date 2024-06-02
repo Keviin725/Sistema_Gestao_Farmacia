@@ -5,9 +5,12 @@ import 'package:sistema_gestao_farmacia/services/venda_service.dart';
 import 'package:sistema_gestao_farmacia/models/venda.dart';
 
 class NovaVendaScreen extends StatefulWidget {
+  final String clienteId;
+  NovaVendaScreen({required this.clienteId});
   @override
   _NovaVendaScreenState createState() => _NovaVendaScreenState();
 }
+
 
 class _NovaVendaScreenState extends State<NovaVendaScreen> {
   final _produtoService = ProdutoService();
@@ -138,6 +141,7 @@ class _NovaVendaScreenState extends State<NovaVendaScreen> {
 
                   final venda = Venda(
                     id: DateTime.now().toString(),
+                    clienteId: widget.clienteId,
                     produtoId: _produtoSelecionado!.id,
                     quantidade: _quantidadeSelecionada,
                     data: DateTime.now().toString(),

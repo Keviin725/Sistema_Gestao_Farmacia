@@ -10,7 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   sqflite: ^2.0.0+3
+  sqflite_common_ffi: any
   font_awesome_flutter: any
+  sqflite_web: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:

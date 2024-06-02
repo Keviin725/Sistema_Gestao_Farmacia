@@ -37,9 +37,10 @@ class FarmaciaGestaoApp extends StatelessWidget {
         '/clientes': (context) => SubmenuClientesScreen(),
         '/clientes/lista': (context) => ListaClientesScreen(),
         '/clientes/adicionar': (context) => AdicionarClienteScreen(),
-        '/clientes/atualizar': (context) {
+                '/clientes/atualizar': (context) {
   final Cliente cliente = ModalRoute.of(context)!.settings.arguments as Cliente;
-  return AtualizarClienteScreen(cliente: cliente);
+  final int clienteId = int.parse(cliente.id);
+  return AtualizarClienteScreen(clienteId: clienteId, cliente: cliente);
 },
 
         '/clientes/remover': (context) => RemoverClienteScreen(),
@@ -48,7 +49,10 @@ class FarmaciaGestaoApp extends StatelessWidget {
         '/inventarios': (context) => SubmenuStockScreen(),
         '/inventarios/atualizar': (context) => AtualizarInventarioScreen(),
         '/vendas': (context) => SubmenuVendasScreen(),
-        '/vendas/nova': (context) => NovaVendaScreen(),
+        '/vendas/nova': (context) {
+  final Cliente cliente = ModalRoute.of(context)!.settings.arguments as Cliente;
+  return NovaVendaScreen(clienteId: cliente.id);
+},
         '/relatorios': (context) => SubmenuRelatoriosScreen(),
         '/clientes/conta-corrente': (context) {
           final Cliente cliente = ModalRoute.of(context)!.settings.arguments as Cliente;
