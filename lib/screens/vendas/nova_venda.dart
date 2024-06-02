@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sistema_gestao_farmacia/models/produto.dart';
 import 'package:sistema_gestao_farmacia/services/produto_service.dart';
+import 'package:sistema_gestao_farmacia/services/venda_service.dart';
+import 'package:sistema_gestao_farmacia/models/venda.dart';
 
 class NovaVendaScreen extends StatefulWidget {
   @override
@@ -9,10 +11,10 @@ class NovaVendaScreen extends StatefulWidget {
 
 class _NovaVendaScreenState extends State<NovaVendaScreen> {
   final _produtoService = ProdutoService();
+  final _vendaService = VendaService();
   List<Produto> _produtos = [];
   Produto? _produtoSelecionado;
   int _quantidadeSelecionada = 1;
-  List<Produto> _itensAdicionados = [];
   double _ivaSelecionado = 0.23; // Taxa de IVA padrão
 
   @override
@@ -129,41 +131,25 @@ class _NovaVendaScreenState extends State<NovaVendaScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                if (_produtoSelecionado != null) {
+                if (_produtoSelecionado != null && _produtoSelecionado!.estoque >= _quantidadeSelecionada) {
+                  final venda = Venda(
+                    id: DateTime.now().toString(),
+                    produtoId: _produtoSelecionado!.id,
+                    quantidade: _quantidadeSelecionada,
+                    data: DateTime.now().toString(),
+                  );
+                  _vendaService.inserirVenda(venda);
                   setState(() {
-                    _itensAdicionados.add(_produtoSelecionado!);
-                    _produtoSelecionado = null;
-                    _quantidadeSelecionada = 1;
+                    _produtoSelecionado!.estoque -= _quantidadeSelecionada;
                   });
+                  Navigator.pop(context, true);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Quantidade em estoque insuficiente ou produto não selecionado!')),
+                  );
                 }
               },
-              child: Text('Adicionar à Venda'),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Itens Adicionados:',
-              style: TextStyle(fontSize: 18),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _itensAdicionados.length,
-                itemBuilder: (context, index) {
-                  final produto = _itensAdicionados[index];
-                  final valorComIVA = _calcularValorComIVA(produto.preco);
-                  final valorIVA = _calcularValorIVA(produto.preco);
-                  return ListTile(
-                    title: Text(produto.nome),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Quantidade: $_quantidadeSelecionada'),
-                        Text('Valor com IVA: R\$ ${valorComIVA.toStringAsFixed(2)}'),
-                        Text('Valor do IVA: R\$ ${valorIVA.toStringAsFixed(2)}'),
-                      ],
-                    ),
-                  );
-                },
-              ),
+              child: Text('Salvar'),
             ),
           ],
         ),
