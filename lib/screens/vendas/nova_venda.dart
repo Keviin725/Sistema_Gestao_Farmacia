@@ -132,15 +132,21 @@ class _NovaVendaScreenState extends State<NovaVendaScreen> {
             ElevatedButton(
               onPressed: () {
                 if (_produtoSelecionado != null && _produtoSelecionado!.estoque >= _quantidadeSelecionada) {
+                  final valorSemIVA = _produtoSelecionado!.preco * _quantidadeSelecionada;
+                  final valorComIVA = _calcularValorComIVA(valorSemIVA);
+                  final valorIVA = _calcularValorIVA(valorSemIVA);
+
                   final venda = Venda(
                     id: DateTime.now().toString(),
                     produtoId: _produtoSelecionado!.id,
                     quantidade: _quantidadeSelecionada,
                     data: DateTime.now().toString(),
+                    valorComIVA: valorComIVA,
+                    valorIVA: valorIVA,
                   );
                   _vendaService.inserirVenda(venda);
                   setState(() {
-                    _produtoSelecionado!.estoque -= _quantidadeSelecionada;
+                    _produtoSelecionado!.atualizarEstoque(_quantidadeSelecionada);
                   });
                   Navigator.pop(context, true);
                 } else {
