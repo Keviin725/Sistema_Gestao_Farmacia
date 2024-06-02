@@ -53,6 +53,7 @@ class FarmaciaGestaoApp extends StatelessWidget {
         '/clientes/conta-corrente': (context) {
           final Cliente cliente = ModalRoute.of(context)!.settings.arguments as Cliente;
           return VerContaCorrenteScreen(cliente:cliente);}
+          
       },
     );
   }

@@ -22,14 +22,17 @@ class _AdicionarProdutoScreenState extends State<AdicionarProdutoScreen> {
         title: Text('Adicionar Produto'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: ListView(
             children: [
               TextFormField(
                 controller: _nomeController,
-                decoration: InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(
+                  labelText: 'Nome',
+                  icon: Icon(Icons.shopping_cart),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira o nome';
@@ -37,9 +40,13 @@ class _AdicionarProdutoScreenState extends State<AdicionarProdutoScreen> {
                   return null;
                 },
               ),
+              SizedBox(height: 20),
               TextFormField(
                 controller: _descricaoController,
-                decoration: InputDecoration(labelText: 'Descrição'),
+                decoration: InputDecoration(
+                  labelText: 'Descrição',
+                  icon: Icon(Icons.description),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira a descrição';
@@ -47,9 +54,13 @@ class _AdicionarProdutoScreenState extends State<AdicionarProdutoScreen> {
                   return null;
                 },
               ),
+              SizedBox(height: 20),
               TextFormField(
                 controller: _precoController,
-                decoration: InputDecoration(labelText: 'Preço'),
+                decoration: InputDecoration(
+                  labelText: 'Preço',
+                  icon: Icon(Icons.attach_money),
+                ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -58,9 +69,13 @@ class _AdicionarProdutoScreenState extends State<AdicionarProdutoScreen> {
                   return null;
                 },
               ),
+              SizedBox(height: 20),
               TextFormField(
                 controller: _estoqueController,
-                decoration: InputDecoration(labelText: 'Estoque'),
+                decoration: InputDecoration(
+                  labelText: 'Estoque',
+                  icon: Icon(Icons.store),
+                ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -69,7 +84,7 @@ class _AdicionarProdutoScreenState extends State<AdicionarProdutoScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState?.validate() == true) {
