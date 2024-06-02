@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 import 'screens/clientes/lista_clientes.dart';
 import 'screens/clientes/adicionar_cliente.dart';
+import 'screens/clientes/submenu_clientes.dart';
+import 'screens/clientes/atualizar_cliente.dart';
+import 'screens/clientes/remover_cliente.dart';
 import 'screens/produtos/lista_produtos.dart';
 import 'screens/produtos/adicionar_produto.dart';
 import 'screens/stock/lista_stock.dart';
@@ -24,11 +27,14 @@ class FarmaciaGestaoApp extends StatelessWidget {
       ),
       home: HomeScreen(),
       routes: {
-        '/clientes': (context) => ListaClientesScreen(),
+        '/clientes': (context) => SubmenuClientesScreen(),
+        '/clientes/lista': (context) => ListaClientesScreen(),
         '/clientes/adicionar': (context) => AdicionarClienteScreen(),
+        '/clientes/atualizar': (context) => AtualizarClienteScreen(),
+        '/clientes/remover': (context) => RemoverClienteScreen(),
         '/produtos': (context) => ListaProdutosScreen(),
         '/produtos/adicionar': (context) => AdicionarProdutoScreen(),
-        '/inventarios': (context) => ListaStockScreen(),
+        '/inventarios': (context) => ListaInventariosScreen(),
         '/inventarios/atualizar': (context) => AtualizarInventarioScreen(),
         '/vendas': (context) => ListaVendasScreen(),
         '/vendas/nova': (context) => NovaVendaScreen(),
