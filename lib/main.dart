@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sistema_gestao_farmacia/models/cliente.dart';
 import 'screens/home_screen.dart';
 import 'screens/clientes/lista_clientes.dart';
 import 'screens/clientes/adicionar_cliente.dart';
@@ -34,7 +35,11 @@ class FarmaciaGestaoApp extends StatelessWidget {
         '/clientes': (context) => SubmenuClientesScreen(),
         '/clientes/lista': (context) => ListaClientesScreen(),
         '/clientes/adicionar': (context) => AdicionarClienteScreen(),
-        '/clientes/atualizar': (context) => AtualizarClienteScreen(),
+        '/clientes/atualizar': (context) {
+  final Cliente cliente = ModalRoute.of(context)!.settings.arguments as Cliente;
+  return AtualizarClienteScreen(cliente: cliente);
+},
+
         '/clientes/remover': (context) => RemoverClienteScreen(),
         '/produtos': (context) => SubmenuProdutosScreen(),
         '/produtos/adicionar': (context) => AdicionarProdutoScreen(),

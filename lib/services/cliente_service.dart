@@ -52,6 +52,17 @@ class ClienteService {
       );
     });
   }
+  Future<void> atualizarCliente(Cliente clienteAtualizado) async {
+  final db = await database;
+  await db.update(
+    'clientes',
+    clienteAtualizado.toMap(),
+    where: 'id = ?',
+    whereArgs: [clienteAtualizado.id],
+  );
+}
+
+
 
   // Implementar outras operações (atualizar, deletar, etc)
 }
