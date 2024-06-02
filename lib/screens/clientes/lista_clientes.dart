@@ -9,19 +9,9 @@ class ListaClientesScreen extends StatefulWidget {
 }
 
 class _ListaClientesScreenState extends State<ListaClientesScreen> {
-  final ClienteService clienteService = ClienteService();
-  List<Cliente> clientes = [];
 
-  @override
-  void initState() {
-    super.initState();
-    carregarClientes();
-  }
 
-  void carregarClientes() async {
-    clientes = await clienteService.getClientes();
-    setState(() {});
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +19,7 @@ class _ListaClientesScreenState extends State<ListaClientesScreen> {
       appBar: AppBar(
         title: Text('Lista de Clientes'),
       ),
-      body: ListView.builder(
-        itemCount: clientes.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(clientes[index].nome),
-            subtitle: Text(clientes[index].email),
-            onTap: () {
-              // Implementar navegação para detalhes do cliente
-            },
-          );
-        },
-      ),
+      
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(

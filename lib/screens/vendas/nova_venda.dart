@@ -11,7 +11,6 @@ class NovaVendaScreen extends StatefulWidget {
   _NovaVendaScreenState createState() => _NovaVendaScreenState();
 }
 
-
 class _NovaVendaScreenState extends State<NovaVendaScreen> {
   final _produtoService = ProdutoService();
   final _vendaService = VendaService();
@@ -23,15 +22,15 @@ class _NovaVendaScreenState extends State<NovaVendaScreen> {
   @override
   void initState() {
     super.initState();
-    _carregarProdutos();
+    // _carregarProdutos(); // Removido para deixar a tela sem dados
   }
 
-  Future<void> _carregarProdutos() async {
-    final produtos = await _produtoService.getProdutos();
-    setState(() {
-      _produtos = produtos;
-    });
-  }
+  // Future<void> _carregarProdutos() async {
+  //   final produtos = await _produtoService.getProdutos();
+  //   setState(() {
+  //     _produtos = produtos.cast<Produto>();
+  //   });
+  // }
 
   double _calcularValorComIVA(double valorSemIVA) {
     return valorSemIVA * (1 + _ivaSelecionado);

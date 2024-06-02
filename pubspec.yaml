@@ -12,12 +12,14 @@ dependencies:
   sqflite: ^2.0.0+3
   sqflite_common_ffi: any
   font_awesome_flutter: any
-  sqflite_web: ^1.0.0+1
+  #sqflite_web: ^1.0.0+1
+  hive: ^2.0.4 # ou indexed_db: ^0.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  build_runner: ^2.1.4
 
 flutter:
   uses-material-design: true

@@ -1,13 +1,15 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_web/sqflite_web.dart';
+import 'package:path/path.dart';
 
 class DatabaseHelper {
   static final _databaseName = 'farmacia.db';
   static final _databaseVersion = 1;
 
+  // Torna esta classe singleton
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
 
+  // Tem apenas uma referência ao banco de dados
   static Database? _database;
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -15,14 +17,17 @@ class DatabaseHelper {
     return _database!;
   }
 
+  // Abre o banco de dados e o cria se ele não existir
   _initDatabase() async {
-    // Use sqflite_web para inicializar o banco de dados
-    await SqflitePluginWeb.registerWebDatabaseFactory();
-    return await openDatabase(
-      _databaseName,
-      version: _databaseVersion,
-      onCreate: _onCreate,
-    );
+    try {
+      String path = join(await getDatabasesPath(), _databaseName);
+      return await openDatabase(path,
+          version: _databaseVersion,
+          onCreate: _onCreate);
+    } catch (e) {
+      print("Erro ao inicializar o banco de dados: $e");
+      throw e; // Re-throw a exceção para notificar o chamador
+    }
   }
 
   // Código SQL para criar o banco de dados e as tabelas

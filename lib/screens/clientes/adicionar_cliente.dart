@@ -85,17 +85,7 @@ class _AdicionarClienteScreenState extends State<AdicionarClienteScreen> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState?.validate() == true) {
-                    final novoCliente = Cliente(
-                      id: DateTime.now().toString(),
-                      nome: _nomeController.text,
-                      endereco: _enderecoController.text,
-                      telefone: _telefoneController.text,
-                      email: _emailController.text,
-                    );
-                    clienteService.inserirCliente(novoCliente);
-                    Navigator.pop(context, true);
-                  }
+                  
                 },
                 child: Text('Salvar'),
               ),

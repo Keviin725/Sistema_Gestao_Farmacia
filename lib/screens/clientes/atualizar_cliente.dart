@@ -3,10 +3,9 @@ import 'package:sistema_gestao_farmacia/models/cliente.dart';
 import 'package:sistema_gestao_farmacia/services/cliente_service.dart';
 
 class AtualizarClienteScreen extends StatefulWidget {
-  final Cliente cliente;
-    final int clienteId;
 
-  AtualizarClienteScreen({required this.cliente, required this.clienteId});
+
+
 
   @override
   _AtualizarClienteScreenState createState() => _AtualizarClienteScreenState();
@@ -20,14 +19,7 @@ class _AtualizarClienteScreenState extends State<AtualizarClienteScreen> {
   final _emailController = TextEditingController();
   final ClienteService clienteService = ClienteService();
 
-  @override
-  void initState() {
-    super.initState();
-    _nomeController.text = widget.cliente.nome;
-    _enderecoController.text = widget.cliente.endereco;
-    _telefoneController.text = widget.cliente.telefone;
-    _emailController.text = widget.cliente.email;
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -99,17 +91,7 @@ class _AtualizarClienteScreenState extends State<AtualizarClienteScreen> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState?.validate() == true) {
-                    final clienteAtualizado = Cliente(
-                      id: widget.cliente.id,
-                      nome: _nomeController.text,
-                      endereco: _enderecoController.text,
-                      telefone: _telefoneController.text,
-                      email: _emailController.text,
-                    );
-                    clienteService.atualizarCliente(clienteAtualizado);
-                    Navigator.pop(context, true);
-                  }
+                  
                 },
                 child: Text('Atualizar'),
               ),
