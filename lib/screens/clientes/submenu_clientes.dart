@@ -18,15 +18,7 @@ class SubmenuClientesScreen extends StatelessWidget {
               },
             ),
           ),
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.update),
-              title: Text('Atualizar Cliente'),
-              onTap: () {
-                Navigator.pushNamed(context, '/clientes/atualizar');
-              },
-            ),
-          ),
+          
           Card(
             child: ListTile(
               leading: Icon(Icons.update),

@@ -5,12 +5,16 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AdicionarProdutoScreen extends StatefulWidget {
+class EditarProdutoScreen extends StatefulWidget {
+  final Produto produto;
+
+  const EditarProdutoScreen({required this.produto});
+
   @override
-  _AdicionarProdutoScreenState createState() => _AdicionarProdutoScreenState();
+  _EditarProdutoScreenState createState() => _EditarProdutoScreenState();
 }
 
-class _AdicionarProdutoScreenState extends State<AdicionarProdutoScreen> {
+class _EditarProdutoScreenState extends State<EditarProdutoScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nomeController = TextEditingController();
   final _descricaoController = TextEditingController();
@@ -19,10 +23,19 @@ class _AdicionarProdutoScreenState extends State<AdicionarProdutoScreen> {
   final ProdutoService produtoService = ProdutoService();
 
   @override
+  void initState() {
+    super.initState();
+    _nomeController.text = widget.produto.nome;
+    _descricaoController.text = widget.produto.descricao;
+    _precoController.text = widget.produto.preco.toString();
+    _estoqueController.text = widget.produto.estoque.toString();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Adicionar Produto ao Stock'),
+        title: Text('Editar Produto'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -89,43 +102,49 @@ class _AdicionarProdutoScreenState extends State<AdicionarProdutoScreen> {
               ),
               SizedBox(height: 40),
               ElevatedButton(
-  onPressed: () async {
-    if (_formKey.currentState?.validate() == true) {
-      final novoProduto = Produto(
-        id: DateTime.now().toString(),
-        nome: _nomeController.text,
-        descricao: _descricaoController.text,
-        preco: double.parse(_precoController.text),
-        estoque: int.parse(_estoqueController.text),
-      );
-
-      // Obtenha a instância do SharedPreferences
-      final prefs = await SharedPreferences.getInstance();
-
-      // Converta o novoProduto em uma string JSON
-      final produtoJson = jsonEncode(novoProduto.toMap());
-
-      // Obtenha a lista atual de produtos do SharedPreferences
-      List<String>? produtosJson = prefs.getStringList('produtos');
-
-      // Se a lista não existir, inicialize-a
-      if (produtosJson == null) {
-        produtosJson = [];
-      }
-
-      // Adicione o novoProduto à lista
-      produtosJson.add(produtoJson);
-
-      // Salve a lista atualizada no SharedPreferences
-      await prefs.setStringList('produtos', produtosJson);
-      ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Produto adicionado com sucesso!')),
+                onPressed: () async {
+                  if (_formKey.currentState?.validate() == true) {
+                    final novoProduto = Produto(
+                      id: widget.produto.id,
+                      nome: _nomeController.text,
+                      descricao: _descricaoController.text,
+                      preco: double.parse(_precoController.text),
+                      estoque: int.parse(_estoqueController.text),
                     );
-      Navigator.pop(context, true);
-    }
-  },
-  child: Text('Salvar'),
-),
+
+                    // Obtenha a instância do SharedPreferences
+                    final prefs = await SharedPreferences.getInstance();
+
+                    // Converta o novoProduto em uma string JSON
+                    final produtoJson = jsonEncode(novoProduto.toMap());
+
+                    // Obtenha a lista atual de produtos do SharedPreferences
+                    List<String>? produtosJson = prefs.getStringList('produtos');
+
+                    // Se a lista não existir, inicialize-a
+                    if (produtosJson == null) {
+                      produtosJson = [];
+                    }
+
+                    // Encontre o índice do produto a ser atualizado na lista
+                    final index = produtosJson.indexWhere((element) => element.contains(novoProduto.id));
+
+                    // Se o produto estiver na lista, atualize-o
+                    if (index != -1) {
+                      produtosJson[index] = produtoJson;
+                    }
+
+                    // Salve a lista atualizada no SharedPreferences
+                    await prefs.setStringList('produtos', produtosJson);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Produto atualizado com sucesso!')),
+                    );
+                    Navigator.pop(context, true);
+                  }
+                },
+                child: Text('Salvar'),
+              ),
             ],
           ),
         ),

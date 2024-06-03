@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sistema_gestao_farmacia/models/cliente.dart';
+import 'package:sistema_gestao_farmacia/models/produto.dart';
 import 'screens/home_screen.dart';
 import 'screens/clientes/lista_clientes.dart';
 import 'screens/clientes/adicionar_cliente.dart';
@@ -11,8 +12,10 @@ import 'screens/clientes/atualizar_cliente.dart';
 import 'screens/clientes/remover_cliente.dart';
 import 'screens/clientes/conta_corrente.dart';
 import 'screens/produtos/lista_produtos.dart';
+import 'screens/produtos/atualizar_produtos.dart';
 import 'screens/produtos/submenu_produtos.dart';
 import 'screens/produtos/adicionar_produto.dart';
+import 'screens/produtos/remover_produtos.dart';
 import 'screens/stock/lista_stock.dart';
 import 'screens/stock/submenu_stock.dart';
 import 'screens/stock/atualizar_stock.dart';
@@ -55,18 +58,26 @@ class FarmaciaGestaoApp extends StatelessWidget {
         '/clientes': (context) => SubmenuClientesScreen(),
         '/clientes/lista': (context) => ListaClientesScreen(),
         '/clientes/adicionar': (context) => AdicionarClienteScreen(),
-                '/clientes/atualizar': (context) => AtualizarClienteScreen(),
+                '/clientes/atualizar': (context) {
+  final Cliente cliente = ModalRoute.of(context)!.settings.arguments as Cliente;
+  return AtualizarClienteScreen(cliente: cliente);
+},
 
         '/clientes/remover': (context) => RemoverClienteScreen(),
+        '/produtos/remover': (context) => RemoverProdutoScreen(),
         '/produtos': (context) => SubmenuProdutosScreen(),
         '/produtos/adicionar': (context) => AdicionarProdutoScreen(),
+        '/produtos/list': (context) => ListaProdutosScreen(),
+        '/produtos/atualizar': (context) {
+  final Produto produto = ModalRoute.of(context)!.settings.arguments as Produto;
+  return EditarProdutoScreen(produto: produto);
+},
+
         '/inventarios': (context) => SubmenuStockScreen(),
+        '/inventario/list': (context) => ListaStockScreen(),
         '/inventarios/atualizar': (context) => AtualizarInventarioScreen(),
         '/vendas': (context) => SubmenuVendasScreen(),
-        '/vendas/nova': (context) {
-  final Cliente cliente = ModalRoute.of(context)!.settings.arguments as Cliente;
-  return NovaVendaScreen(clienteId: cliente.id);
-},
+        '/vendas/nova': (context) => NovaVendaScreen(),
         '/relatorios': (context) => SubmenuRelatoriosScreen(),
         '/clientes/conta-corrente': (context) => VerContaCorrenteScreen()
           

@@ -11,8 +11,17 @@ class SubmenuProdutosScreen extends StatelessWidget {
         children: [
           Card(
             child: ListTile(
+              leading: Icon(Icons.list),
+              title: Text('Lista de Produtos'),
+              onTap: () {
+                Navigator.pushNamed(context, '/produtos/list');
+              },
+            ),
+          ),
+          Card(
+            child: ListTile(
               leading: Icon(Icons.add),
-              title: Text('1.1 Adicionar Produto'),
+              title: Text('Adicionar Produto'),
               onTap: () {
                 Navigator.pushNamed(context, '/produtos/adicionar');
               },
@@ -24,7 +33,7 @@ class SubmenuProdutosScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: Icon(Icons.update),
-              title: Text('1.2 Atualizar Produto'),
+              title: Text('Atualizar Produto'),
               onTap: () {
                 Navigator.pushNamed(context, '/produtos/atualizar');
               },

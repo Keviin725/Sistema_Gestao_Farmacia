@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sistema_gestao_farmacia/models/cliente.dart';
-import 'package:sistema_gestao_farmacia/services/cliente_service.dart';
 
 class AtualizarClienteScreen extends StatefulWidget {
+  final Cliente cliente;
+   AtualizarClienteScreen({required this.cliente});
 
-
-
+  //AtualizarClienteScreen({required this.cliente});
 
   @override
   _AtualizarClienteScreenState createState() => _AtualizarClienteScreenState();
@@ -13,13 +13,28 @@ class AtualizarClienteScreen extends StatefulWidget {
 
 class _AtualizarClienteScreenState extends State<AtualizarClienteScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nomeController = TextEditingController();
-  final _enderecoController = TextEditingController();
-  final _telefoneController = TextEditingController();
-  final _emailController = TextEditingController();
-  final ClienteService clienteService = ClienteService();
+  late TextEditingController _nomeController;
+  late TextEditingController _enderecoController;
+  late TextEditingController _telefoneController;
+  late TextEditingController _emailController;
 
- 
+  @override
+  void initState() {
+    super.initState();
+    _nomeController = TextEditingController(text: widget.cliente.nome);
+    _enderecoController = TextEditingController(text: widget.cliente.endereco);
+    _telefoneController = TextEditingController(text: widget.cliente.telefone);
+    _emailController = TextEditingController(text: widget.cliente.email);
+  }
+
+  @override
+  void dispose() {
+    _nomeController.dispose();
+    _enderecoController.dispose();
+    _telefoneController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +106,16 @@ class _AtualizarClienteScreenState extends State<AtualizarClienteScreen> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  
+                  if (_formKey.currentState!.validate()) {
+                    final clienteAtualizado = Cliente(
+                      id: widget.cliente.id,
+                      nome: _nomeController.text,
+                      endereco: _enderecoController.text,
+                      telefone: _telefoneController.text,
+                      email: _emailController.text,
+                    );
+                    Navigator.pop(context, clienteAtualizado);
+                  }
                 },
                 child: Text('Atualizar'),
               ),

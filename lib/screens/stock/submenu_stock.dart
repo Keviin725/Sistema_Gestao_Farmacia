@@ -11,13 +11,15 @@ class SubmenuStockScreen extends StatelessWidget {
         children: [
           Card(
             child: ListTile(
-              leading: Icon(Icons.update),
-              title: Text('1.1 Atualizar Stock'),
+              leading: Icon(Icons.list),
+              title: Text('Lista de Stock'),
               onTap: () {
-                Navigator.pushNamed(context, '/inventarios/atualizar');
+                Navigator.pushNamed(context, '/inventario/list');
               },
             ),
           ),
+         
+         
           // Adicione mais opções conforme necessário
           // Exemplo:
           
@@ -26,7 +28,7 @@ class SubmenuStockScreen extends StatelessWidget {
               leading: Icon(Icons.add),
               title: Text('1.2 Adicionar Stock'),
               onTap: () {
-                Navigator.pushNamed(context, '/inventarios/adicionar');
+                Navigator.pushNamed(context, '/produtos/adicionar');
               },
             ),
           ),

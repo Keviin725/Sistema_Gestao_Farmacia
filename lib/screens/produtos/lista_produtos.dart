@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sistema_gestao_farmacia/models/produto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'adicionar_produto.dart';
+import 'atualizar_produtos.dart';
 
 class ListaProdutosScreen extends StatefulWidget {
   @override
@@ -44,11 +45,18 @@ class _ListaProdutosScreenState extends State<ListaProdutosScreen> {
                 child: Text(produtos[index].nome[0]),
               ),
               title: Text(produtos[index].nome),
-              subtitle: Text('${produtos[index].descricao} - R\$${produtos[index].preco}'),
+              subtitle: Text('${produtos[index].descricao} - MZN${produtos[index].preco} - Quantidade: ${produtos[index].estoque}'),
               trailing: IconButton(
-                icon: Icon(Icons.arrow_forward),
+                icon: Icon(Icons.edit),
                 onPressed: () {
-                  // Implementar navegação para detalhes do produto
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EditarProdutoScreen(produto: produtos[index])),
+                  ).then((value) {
+                    if (value == true) {
+                      carregarProdutos();
+                    }
+                  });
                 },
               ),
             ),

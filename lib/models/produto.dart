@@ -39,4 +39,24 @@ class Produto {
       estoque: map['estoque'],
     );
   }
+  static Produto fromJson(Map<String, dynamic> json) {
+    return Produto(
+      id: json['id'],
+      nome: json['nome'],
+      descricao: json['descricao'],
+      preco: json['preco'],
+      estoque: json['estoque'],
+    );
+  }
+
+   Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nome': nome,
+      'descricao': descricao,
+      'preco': preco,
+      'estoque': estoque,
+    };
+  }
+  
 }

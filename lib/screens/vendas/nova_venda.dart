@@ -1,36 +1,55 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:sistema_gestao_farmacia/models/produto.dart';
-import 'package:sistema_gestao_farmacia/services/produto_service.dart';
-import 'package:sistema_gestao_farmacia/services/venda_service.dart';
 import 'package:sistema_gestao_farmacia/models/venda.dart';
+import 'package:sistema_gestao_farmacia/models/cliente.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NovaVendaScreen extends StatefulWidget {
-  final String clienteId;
-  NovaVendaScreen({required this.clienteId});
   @override
   _NovaVendaScreenState createState() => _NovaVendaScreenState();
 }
 
 class _NovaVendaScreenState extends State<NovaVendaScreen> {
-  final _produtoService = ProdutoService();
-  final _vendaService = VendaService();
   List<Produto> _produtos = [];
+  List<Cliente> _clientes = [];
   Produto? _produtoSelecionado;
+  Cliente? _clienteSelecionado;
   int _quantidadeSelecionada = 1;
-  double _ivaSelecionado = 0.23; // Taxa de IVA padrão
+  double _ivaSelecionado = 0.23;
 
   @override
   void initState() {
     super.initState();
-    // _carregarProdutos(); // Removido para deixar a tela sem dados
+    _carregarProdutos();
+    _carregarClientes();
   }
 
-  // Future<void> _carregarProdutos() async {
-  //   final produtos = await _produtoService.getProdutos();
-  //   setState(() {
-  //     _produtos = produtos.cast<Produto>();
-  //   });
-  // }
+  Future<void> _carregarProdutos() async {
+    final prefs = await SharedPreferences.getInstance();
+    final produtosJson = prefs.getStringList('produtos') ?? [];
+    setState(() {
+      _produtos = produtosJson.map((produto) => Produto.fromJson(jsonDecode(produto))).toList();
+    });
+  }
+
+  Future<void> _carregarClientes() async {
+    final prefs = await SharedPreferences.getInstance();
+    final clientesJson = prefs.getStringList('clientes') ?? [];
+    setState(() {
+      _clientes = clientesJson.map((cliente) => Cliente.fromJson(jsonDecode(cliente))).toList();
+    });
+  }
+
+  Future<void> _atualizarProduto(Produto produto) async {
+    final prefs = await SharedPreferences.getInstance();
+    final produtosJson = prefs.getStringList('produtos') ?? [];
+    final index = produtosJson.indexWhere((produtoJson) => Produto.fromJson(jsonDecode(produtoJson)).id == produto.id);
+    if (index != -1) {
+      produtosJson[index] = jsonEncode(produto.toJson());
+      await prefs.setStringList('produtos', produtosJson);
+    }
+  }
 
   double _calcularValorComIVA(double valorSemIVA) {
     return valorSemIVA * (1 + _ivaSelecionado);
@@ -38,6 +57,13 @@ class _NovaVendaScreenState extends State<NovaVendaScreen> {
 
   double _calcularValorIVA(double valorSemIVA) {
     return valorSemIVA * _ivaSelecionado;
+  }
+
+  Future<void> _inserirVenda(Venda venda) async {
+    final prefs = await SharedPreferences.getInstance();
+    final vendas = prefs.getStringList('vendas') ?? [];
+    vendas.add(jsonEncode(venda.toJson()));
+    await prefs.setStringList('vendas', vendas);
   }
 
   @override
@@ -52,34 +78,51 @@ class _NovaVendaScreenState extends State<NovaVendaScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Selecione o produto:',
-              style: TextStyle(fontSize: 18),
+              'Selecionar Cliente',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
-            DropdownButtonFormField<Produto>(
+            DropdownButton<Cliente>(
+              value: _clienteSelecionado,
+              hint: Text('Selecione um cliente'),
+              isExpanded: true,
+              items: _clientes.map((Cliente cliente) {
+                return DropdownMenuItem<Cliente>(
+                  value: cliente,
+                  child: Text(cliente.nome),
+                );
+              }).toList(),
+              onChanged: (Cliente? novoClienteSelecionado) {
+                setState(() {
+                  _clienteSelecionado = novoClienteSelecionado;
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Selecionar Produto',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            DropdownButton<Produto>(
               value: _produtoSelecionado,
-              items: _produtos.map((produto) {
+              hint: Text('Selecione um produto'),
+              isExpanded: true,
+              items: _produtos.map((Produto produto) {
                 return DropdownMenuItem<Produto>(
                   value: produto,
                   child: Text(produto.nome),
                 );
               }).toList(),
-              onChanged: (produto) {
+              onChanged: (Produto? novoProdutoSelecionado) {
                 setState(() {
-                  _produtoSelecionado = produto;
+                  _produtoSelecionado = novoProdutoSelecionado;
                 });
               },
-              decoration: InputDecoration(
-                labelText: 'Produto',
-                border: OutlineInputBorder(),
-              ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Text(
-              'Quantidade:',
-              style: TextStyle(fontSize: 18),
+              'Quantidade',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
             Row(
               children: [
                 IconButton(
@@ -106,60 +149,54 @@ class _NovaVendaScreenState extends State<NovaVendaScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Text(
-              'Taxa de IVA:',
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(height: 10),
-            DropdownButtonFormField<double>(
-              value: _ivaSelecionado,
-              items: [0.06, 0.13, 0.23].map((iva) {
-                return DropdownMenuItem<double>(
-                  value: iva,
-                  child: Text('${iva * 100}%'),
-                );
-              }).toList(),
-              onChanged: (iva) {
-                setState(() {
-                  _ivaSelecionado = iva!;
-                });
-              },
-              decoration: InputDecoration(
-                labelText: 'Taxa de IVA',
-                border: OutlineInputBorder(),
-              ),
-            ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                if (_produtoSelecionado != null && _produtoSelecionado!.estoque >= _quantidadeSelecionada) {
+                if (_clienteSelecionado != null && _produtoSelecionado != null && _produtoSelecionado!.estoque >= _quantidadeSelecionada) {
                   final valorSemIVA = _produtoSelecionado!.preco * _quantidadeSelecionada;
                   final valorComIVA = _calcularValorComIVA(valorSemIVA);
                   final valorIVA = _calcularValorIVA(valorSemIVA);
 
                   final venda = Venda(
                     id: DateTime.now().toString(),
-                    clienteId: widget.clienteId,
+                    clienteId: _clienteSelecionado!.id,
                     produtoId: _produtoSelecionado!.id,
                     quantidade: _quantidadeSelecionada,
                     data: DateTime.now().toString(),
                     valorComIVA: valorComIVA,
                     valorIVA: valorIVA,
                   );
-                  _vendaService.inserirVenda(venda);
+                  _inserirVenda(venda);
                   setState(() {
-                    _produtoSelecionado!.atualizarEstoque(_quantidadeSelecionada);
+                    _produtoSelecionado!.estoque -= _quantidadeSelecionada;
                   });
+                  _atualizarProduto(_produtoSelecionado!);
                   Navigator.pop(context, true);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Quantidade em estoque insuficiente ou produto não selecionado!')),
+                    SnackBar(content: Text('Cliente, produto não selecionado ou quantidade em estoque insuficiente!')),
                   );
                 }
               },
               child: Text('Salvar'),
             ),
+            SizedBox(height: 20),
+            if (_produtoSelecionado != null)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Detalhes da Venda',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  Text('Produto: ${_produtoSelecionado!.nome}'),
+                  Text('Quantidade: $_quantidadeSelecionada'),
+                  Text('Valor sem IVA: MZN${(_produtoSelecionado!.preco * _quantidadeSelecionada).toStringAsFixed(2)}'),
+                  Text('Valor do IVA: MZN${_calcularValorIVA(_produtoSelecionado!.preco * _quantidadeSelecionada).toStringAsFixed(2)}'),
+                  Text('Valor com IVA: MZN${_calcularValorComIVA(_produtoSelecionado!.preco * _quantidadeSelecionada).toStringAsFixed(2)}'),
+                ],
+              ),
           ],
         ),
       ),

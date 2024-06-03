@@ -12,7 +12,7 @@ class SubmenuVendasScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: Icon(Icons.add_shopping_cart),
-              title: Text('1.1 Nova Venda'),
+              title: Text('Nova Venda'),
               onTap: () {
                 Navigator.pushNamed(context, '/vendas/nova');
               },
@@ -23,7 +23,7 @@ class SubmenuVendasScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: Icon(Icons.update),
-              title: Text('1.2 Atualizar Venda'),
+              title: Text('Atualizar Venda'),
               onTap: () {
                 Navigator.pushNamed(context, '/vendas/atualizar');
               },
@@ -32,7 +32,7 @@ class SubmenuVendasScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: Icon(Icons.delete),
-              title: Text('1.3 Cancelar Venda'),
+              title: Text('Cancelar Venda'),
               onTap: () {
                 Navigator.pushNamed(context, '/vendas/cancelar');
               },

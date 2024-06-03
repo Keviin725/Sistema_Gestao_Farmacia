@@ -31,6 +31,28 @@ class Cliente {
       telefone = map['telefone'],
       email = map['email'];
 
+
+  // Convertendo um Cliente em um Map
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nome': nome,
+      'endereco': endereco,
+      'telefone': telefone,
+      'email': email,
+    };
+  }
+
+  // Convertendo um Map em um Cliente
+  factory Cliente.fromJson(Map<String, dynamic> json) {
+    return Cliente(
+      id: json['id'],
+      nome: json['nome'],
+      endereco: json['endereco'],
+      telefone: json['telefone'],
+      email: json['email'],
+    );
+  }
   @override
   String toString() {
     return 'Cliente{id: $id, nome: $nome, endereco: $endereco, telefone: $telefone, email: $email}';

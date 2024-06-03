@@ -40,4 +40,28 @@ class Venda {
       valorIVA: map['valorIVA'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'clienteId': clienteId, // Adicionado clienteId
+      'produtoId': produtoId,
+      'quantidade': quantidade,
+      'data': data,
+      'valorComIVA': valorComIVA,
+      'valorIVA': valorIVA,
+    };
+  }
+
+  static Venda fromJson(Map<String, dynamic> json) {
+    return Venda(
+      id: json['id'],
+      clienteId: json['clienteId'], // Adicionado clienteId
+      produtoId: json['produtoId'],
+      quantidade: json['quantidade'],
+      data: json['data'],
+      valorComIVA: json['valorComIVA'],
+      valorIVA: json['valorIVA'],
+    );
+  }
 }
