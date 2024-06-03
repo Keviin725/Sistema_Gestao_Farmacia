@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sistema_gestao_farmacia/models/cliente.dart';
 import 'screens/home_screen.dart';
 import 'screens/clientes/lista_clientes.dart';
@@ -18,8 +21,23 @@ import 'screens/vendas/submenu_vendas.dart';
 import 'screens/vendas/nova_venda.dart';
 import 'screens/relatorios/lista_relatorios.dart';
 import 'screens/relatorios/submenu_relatorios.dart';
+import 'services/database.dart';
 
 void main() {
+  if (kIsWeb) {
+    // Use sqflite_common_ffi_web for web
+    databaseFactory = databaseFactoryFfiWeb;
+  } else {
+    // Use sqflite_common_ffi for desktop and mobile
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
+
+  WidgetsFlutterBinding.ensureInitialized(); // Garante que os serviços do Flutter estejam inicializados
+    final dbHelper = DatabaseHelper.instance;
+  dbHelper.database;
+
+
   runApp(FarmaciaGestaoApp());
 }
 
@@ -37,11 +55,7 @@ class FarmaciaGestaoApp extends StatelessWidget {
         '/clientes': (context) => SubmenuClientesScreen(),
         '/clientes/lista': (context) => ListaClientesScreen(),
         '/clientes/adicionar': (context) => AdicionarClienteScreen(),
-                '/clientes/atualizar': (context) {
-  final Cliente cliente = ModalRoute.of(context)!.settings.arguments as Cliente;
-  final int clienteId = int.parse(cliente.id);
-  return AtualizarClienteScreen(clienteId: clienteId, cliente: cliente);
-},
+                '/clientes/atualizar': (context) => AtualizarClienteScreen(),
 
         '/clientes/remover': (context) => RemoverClienteScreen(),
         '/produtos': (context) => SubmenuProdutosScreen(),
@@ -54,9 +68,7 @@ class FarmaciaGestaoApp extends StatelessWidget {
   return NovaVendaScreen(clienteId: cliente.id);
 },
         '/relatorios': (context) => SubmenuRelatoriosScreen(),
-        '/clientes/conta-corrente': (context) {
-          final Cliente cliente = ModalRoute.of(context)!.settings.arguments as Cliente;
-          return VerContaCorrenteScreen(cliente:cliente);}
+        '/clientes/conta-corrente': (context) => VerContaCorrenteScreen()
           
       },
     );

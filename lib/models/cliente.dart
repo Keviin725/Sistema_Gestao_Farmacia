@@ -23,13 +23,16 @@ class Cliente {
     };
   }
 
-  static Cliente fromMap(Map<String, dynamic> map) {
-    return Cliente(
-      id: map['id'],
-      nome: map['nome'],
-      endereco: map['endereco'],
-      telefone: map['telefone'],
-      email: map['email'],
-    );
+  // Adicionando o método fromMap
+  Cliente.fromMap(Map<String, dynamic> map) 
+    : id = map['id'],
+      nome = map['nome'],
+      endereco = map['endereco'],
+      telefone = map['telefone'],
+      email = map['email'];
+
+  @override
+  String toString() {
+    return 'Cliente{id: $id, nome: $nome, endereco: $endereco, telefone: $telefone, email: $email}';
   }
 }

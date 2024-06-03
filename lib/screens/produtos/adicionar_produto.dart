@@ -86,21 +86,41 @@ class _AdicionarProdutoScreenState extends State<AdicionarProdutoScreen> {
               ),
               SizedBox(height: 40),
               ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState?.validate() == true) {
-                    final novoProduto = Produto(
-                      id: DateTime.now().toString(),
-                      nome: _nomeController.text,
-                      descricao: _descricaoController.text,
-                      preco: double.parse(_precoController.text),
-                      estoque: int.parse(_estoqueController.text),
-                    );
-                    produtoService.inserirProduto(novoProduto);
-                    Navigator.pop(context, true);
-                  }
-                },
-                child: Text('Salvar'),
-              ),
+  onPressed: () async {
+    if (_formKey.currentState?.validate() == true) {
+      final novoProduto = Produto(
+        id: DateTime.now().toString(),
+        nome: _nomeController.text,
+        descricao: _descricaoController.text,
+        preco: double.parse(_precoController.text),
+        estoque: int.parse(_estoqueController.text),
+      );
+
+      // Obtenha a instância do SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+
+      // Converta o novoProduto em uma string JSON
+      final produtoJson = jsonEncode(novoProduto.toMap());
+
+      // Obtenha a lista atual de produtos do SharedPreferences
+      List<String>? produtosJson = prefs.getStringList('produtos');
+
+      // Se a lista não existir, inicialize-a
+      if (produtosJson == null) {
+        produtosJson = [];
+      }
+
+      // Adicione o novoProduto à lista
+      produtosJson.add(produtoJson);
+
+      // Salve a lista atualizada no SharedPreferences
+      await prefs.setStringList('produtos', produtosJson);
+
+      Navigator.pop(context, true);
+    }
+  },
+  child: Text('Salvar'),
+),
             ],
           ),
         ),

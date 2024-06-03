@@ -45,6 +45,16 @@ class SubmenuClientesScreen extends StatelessWidget {
               },
             ),
           ),
+          // Adicionando a opção de visualizar a lista de clientes
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.list),
+              title: Text('Lista de Clientes'),
+              onTap: () {
+                Navigator.pushNamed(context, '/clientes/lista');
+              },
+            ),
+          ),
         ],
       ),
     );
