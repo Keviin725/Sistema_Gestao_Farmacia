@@ -77,6 +77,7 @@ class FarmaciaGestaoApp extends StatelessWidget {
         '/inventario/list': (context) => ListaStockScreen(),
         '/inventarios/atualizar': (context) => AtualizarInventarioScreen(),
         '/vendas': (context) => SubmenuVendasScreen(),
+        '/vendas/list': (context) => ListaVendasScreen(),
         '/vendas/nova': (context) => NovaVendaScreen(),
         '/relatorios': (context) => SubmenuRelatoriosScreen(),
         '/clientes/conta-corrente': (context) => VerContaCorrenteScreen()

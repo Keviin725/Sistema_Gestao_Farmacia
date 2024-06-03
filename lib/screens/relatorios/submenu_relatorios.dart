@@ -15,16 +15,16 @@ class SubmenuRelatoriosScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: Icon(Icons.insert_chart),
-              title: Text('1.1 Relatório de Vendas'),
+              title: Text('Relatório de Vendas'),
               onTap: () {
-                Navigator.pushNamed(context, '/relatorios/vendas');
+                Navigator.pushNamed(context, '/vendas/list');
               },
             ),
           ),
           Card(
             child: ListTile(
               leading: Icon(Icons.bar_chart),
-              title: Text('1.2 Relatório de Stock'),
+              title: Text('Relatório de Stock'),
               onTap: () {
                 Navigator.pushNamed(context, '/relatorios/stock');
               },
@@ -33,7 +33,7 @@ class SubmenuRelatoriosScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: Icon(Icons.bar_chart),
-              title: Text('1.2 Relatório de Produtos mais vendidos'),
+              title: Text('Relatório de Produtos mais vendidos'),
               onTap: () {
                 //Navigator.pushNamed(context, '/relatorios/stock');
               },

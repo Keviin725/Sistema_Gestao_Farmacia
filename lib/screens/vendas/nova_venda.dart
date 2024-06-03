@@ -51,6 +51,10 @@ class _NovaVendaScreenState extends State<NovaVendaScreen> {
     }
   }
 
+  double _calcularValorTotal(double preco, int quantidade) {
+    return preco * quantidade;
+  }
+
   double _calcularValorComIVA(double valorSemIVA) {
     return valorSemIVA * (1 + _ivaSelecionado);
   }
@@ -153,7 +157,7 @@ class _NovaVendaScreenState extends State<NovaVendaScreen> {
             ElevatedButton(
               onPressed: () {
                 if (_clienteSelecionado != null && _produtoSelecionado != null && _produtoSelecionado!.estoque >= _quantidadeSelecionada) {
-                  final valorSemIVA = _produtoSelecionado!.preco * _quantidadeSelecionada;
+                  final valorSemIVA = _calcularValorTotal(_produtoSelecionado!.preco, _quantidadeSelecionada);
                   final valorComIVA = _calcularValorComIVA(valorSemIVA);
                   final valorIVA = _calcularValorIVA(valorSemIVA);
 
@@ -192,9 +196,9 @@ class _NovaVendaScreenState extends State<NovaVendaScreen> {
                   SizedBox(height: 10),
                   Text('Produto: ${_produtoSelecionado!.nome}'),
                   Text('Quantidade: $_quantidadeSelecionada'),
-                  Text('Valor sem IVA: MZN${(_produtoSelecionado!.preco * _quantidadeSelecionada).toStringAsFixed(2)}'),
-                  Text('Valor do IVA: MZN${_calcularValorIVA(_produtoSelecionado!.preco * _quantidadeSelecionada).toStringAsFixed(2)}'),
-                  Text('Valor com IVA: MZN${_calcularValorComIVA(_produtoSelecionado!.preco * _quantidadeSelecionada).toStringAsFixed(2)}'),
+                  Text('Valor sem IVA: MZN${_calcularValorTotal(_produtoSelecionado!.preco, _quantidadeSelecionada).toStringAsFixed(2)}'),
+                  Text('Valor do IVA: MZN${_calcularValorIVA(_calcularValorTotal(_produtoSelecionado!.preco, _quantidadeSelecionada)).toStringAsFixed(2)}'),
+                  Text('Valor com IVA: MZN${_calcularValorComIVA(_calcularValorTotal(_produtoSelecionado!.preco, _quantidadeSelecionada)).toStringAsFixed(2)}'),
                 ],
               ),
           ],

@@ -22,7 +22,7 @@ class _ListaVendasScreenState extends State<ListaVendasScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Vendas'),
+        title: Text('Relatorio de Vendas'),
       ),
       body: vendas.isEmpty
           ? Center(child: Text('Nenhuma venda encontrada'))

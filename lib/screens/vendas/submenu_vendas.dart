@@ -9,6 +9,7 @@ class SubmenuVendasScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          
           Card(
             child: ListTile(
               leading: Icon(Icons.add_shopping_cart),

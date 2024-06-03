@@ -29,20 +29,11 @@ class SubmenuProdutosScreen extends StatelessWidget {
           ),
           // Adicione mais opções conforme necessário
           // Exemplo:
-          
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.update),
-              title: Text('Atualizar Produto'),
-              onTap: () {
-                Navigator.pushNamed(context, '/produtos/atualizar');
-              },
-            ),
-          ),
+        
           Card(
             child: ListTile(
               leading: Icon(Icons.delete),
-              title: Text('1.3 Remover Produto'),
+              title: Text('Remover Produto'),
               onTap: () {
                 Navigator.pushNamed(context, '/produtos/remover');
               },
